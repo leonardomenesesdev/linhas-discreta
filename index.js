@@ -50,6 +50,23 @@ function isSimetrica(matriz, transposta) {
     return simetrica
 }
 
+function fechoSimetrico(matriz, transposta) {
+    const n = matriz.length;
+    const fechoMatriz = Array.from({ length: n }, () => Array(n).fill(0));
+
+    for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+            // Se existe ligação de i para j ou de j para i, coloca 1
+            if (matriz[i][j] === 1 || transposta[i][j] === 1) {
+                fechoMatriz[i][j] = 1;
+            }
+        }
+    }
+
+    return fechoMatriz;
+}
+
+
 function isAntiSimetrica(matriz) {
     let antiSimetrica = true
 
@@ -152,3 +169,7 @@ console.log(`A matriz é simetrica: ${simetrica}`)
 console.log(`A matriz é antisimetrica: ${antisimetrica}`)
 console.log(`A matriz é assimetrica: ${assimetrica}`)
 console.log(`A matriz é transitiva: ${transitiva}`)
+fechoSimetrico(matrizAdjacencia, matrizAdjacenciaTransposta)
+const fecho = fechoSimetrico(matrizAdjacencia, matrizAdjacenciaTransposta);
+console.log("\nFecho Simétrico");
+imprimirMatriz(fecho);
