@@ -1,11 +1,11 @@
 const matrizAdjacencia = [
     // 1  2  3  4  5  6
-    [ 1, 1, 0, 0, 0, 0 ], // 1 - Avenida
-    [ 0, 1, 1, 0, 0, 0 ], // 2 - Centro
-    [ 1, 0, 1, 1, 0, 0 ], // 3 - Praça
-    [ 0, 0, 0, 1, 1, 0 ], // 4 - Parque
-    [ 0, 1, 0, 0, 1, 1 ], // 5 - Shopping
-    [ 0, 1, 0, 0, 0, 1 ]  // 6 - Terminal
+    [ 1, 1, 0, 0, 0, 0 ], // 1 - Avenida → Avenida, Centro
+    [ 0, 1, 1, 0, 0, 0 ], // 2 - Centro → Centro, Praça
+    [ 1, 0, 1, 1, 0, 0 ], // 3 - Praça → Praça, Avenida, Parque
+    [ 0, 0, 0, 1, 1, 0 ], // 4 - Parque → Parque, Shopping
+    [ 0, 1, 0, 0, 1, 1 ], // 5 - Shopping → Shopping, Centro, Terminal 
+    [ 0, 1, 0, 0, 0, 1 ]  // 6 - Terminal → Terminal, Centro
 ];
 const matrizOnibus = [
     [0, 1, 0, 0, 0, 1],
@@ -15,32 +15,27 @@ const matrizOnibus = [
     [0, 0, 0, 0, 0, 1],
     [1, 0, 0, 1, 1, 0]
 ];
-  
+      
 
 // * funções que verificam as classificações
 function isReflexiva(matriz) {
-    for (i = 0; i < matriz.length; i++) {
-
-        for (j = 0; j < matriz[0].length; j++) {
-            
-            if (i == j) {
-                return matriz[i][j] == 1
-            }
+    for (let i = 0; i < matriz.length; i++) {
+        if (matriz[i][i] !== 1) {
+            return false;
         }
     }
+    return true;
 }
 
 function isIrreflexiva(matriz) {
-    for (i = 0; i < matriz.length; i++) {
-
-        for (j = 0; j < matriz[0].length; j++) {
-            
-            if (i == j) {
-                return matriz[i][j] == 0
-            }
+    for (let i = 0; i < matriz.length; i++) {
+        if (matriz[i][i] !== 0) {
+            return false;
         }
     }
+    return true;
 }
+
 
 function isSimetrica(matriz, transposta) {
     let simetrica = true
@@ -177,6 +172,104 @@ function multiplicarMatrizes(matrizA, matrizB) {
 }
 
 
+function isEquivalencia(matriz, transposta){
+    let eq = false
+    if(isSimetrica(matriz, transposta) && isTransitiva(matriz) && isReflexiva(matriz)){
+        eq = true
+    }
+    return eq
+}
+
+function isOrdem(matriz){
+    let od = false
+    if(isAntiSimetrica(matriz) && isTransitiva(matriz) && isReflexiva(matriz)){
+        od = true
+    }
+    return od
+}
+
+function findMaximais(matriz){
+    n = matriz.length
+    const maximais = []
+    for(i = 0; i<n; i++){
+        let isMaximal = true
+        for(j = 0; j<n; j++){
+            if (i !== j && matriz[i][j] === 1) {
+                isMaximal = false
+                break
+            }
+        }
+        if (isMaximal) {
+            maximais.push(i + 1)
+        }
+    }
+    if(maximais.length>0){
+        return maximais
+    }
+    var not = "Nenhum maximal"
+    return not   
+}
+
+function findMinimais(matriz){
+    n = matriz.length
+    const minimais = []
+    for(i = 0; i<n; i++){
+        let isMinimal = true
+        for(j = 0; j<n; j++){
+            if (i !== j && matriz[j][i] === 1) {
+                isMinimal = false
+                break
+            }
+        }
+        if (isMinimal) {
+            minimais.push(i + 1)
+        }
+    }
+    if(minimais.length>0){
+        return minimais
+    }
+    var not = "Nenhum minimal"
+    return not  
+}
+function encontrarMenorElemento(matriz) {
+    for (let i = 0; i < matriz.length; i++) {
+        let ehMenor = true;
+
+        for (let j = 0; j < matriz.length; j++) {
+            if (matriz[i][j] !== 1) {
+                ehMenor = false;
+                break;
+            }
+        }
+
+        if (ehMenor) {
+            return i + 1; 
+        }
+    }
+    return null;
+}
+
+function encontrarMaiorElemento(matriz) {
+    for (let j = 0; j < matriz.length; j++) {
+        let ehMaior = true;
+
+        for (let i = 0; i < matriz.length; i++) {
+            if (matriz[i][j] !== 1) {
+                ehMaior = false;
+                break;
+            }
+        }
+
+        if (ehMaior) {
+            return j + 1; 
+        }
+    }
+
+    return null;
+}
+
+
+
 console.log("MATRIZ ADJACENCIA")
 imprimirMatriz(matrizAdjacencia)
 
@@ -191,12 +284,30 @@ const antisimetrica = isAntiSimetrica(matrizAdjacencia) ? "Sim." : "Não." // Pa
 const assimetrica = isAssimetrica(matrizAdjacencia) ? "Sim." : "Não." //Anti-simétrica e irreflexiva.
 const transitiva = isTransitiva(matrizAdjacencia) ? "Sim." : "Não."
 
+const equivalencia = isEquivalencia(matrizAdjacencia, matrizAdjacenciaTransposta) ? "Sim" : "Não"
+const ordem = isOrdem(matrizAdjacencia) ? "Sim" : "Não"
+
 console.log(`A matriz é reflexiva: ${reflexiva}`)
 console.log(`A matriz é irreflexiva: ${irreflexiva}`)
 console.log(`A matriz é simetrica: ${simetrica}`)
 console.log(`A matriz é antisimetrica: ${antisimetrica}`)
 console.log(`A matriz é assimetrica: ${assimetrica}`)
 console.log(`A matriz é transitiva: ${transitiva}`)
+console.log(`É relação de equivalência: ${equivalencia}`)
+console.log(`É relação de ordem: ${ordem}`)
+const max = findMaximais(matrizAdjacencia);
+console.log("Elementos maximais:", max);
+const min = findMinimais(matrizAdjacencia)
+console.log("Elementos minimais:", min);
+const menor = encontrarMenorElemento(matrizAdjacencia);
+console.log("Menor elemento:", menor ?? "Não existe");
+
+const maior = encontrarMaiorElemento(matrizAdjacencia);
+console.log("Maior elemento:", maior ?? "Não existe");
+
+
+
+
 fechoSimetrico(matrizAdjacencia, matrizAdjacenciaTransposta)
 const fecho = fechoSimetrico(matrizAdjacencia, matrizAdjacenciaTransposta);
 console.log("\nFecho Simétrico");
