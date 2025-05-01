@@ -268,6 +268,34 @@ function encontrarMaiorElemento(matriz) {
     return null;
 }
 
+// * composição com a matriz do ônibus
+function composicaoMetroOnibus(matrizAdjacencia, matrizOnibus) {
+    // Metrô º Ônibus
+    // 2º       1º
+
+    const multiplicacao = multiplicarMatrizes(matrizOnibus, matrizAdjacencia) // Multiplicação de matrizes
+
+    const composicao = transformaEmBinario(multiplicacao) // Transforma a matriz resultante em binário
+    console.log("\nComposição Metrô º Ônibus:")
+    imprimirMatriz(composicao) // Imprime a matriz resultante
+}
+
+
+function transformaEmBinario(matriz) {
+    for (let i = 0; i < matriz.length; i++) {
+        for (let j = 0; j < matriz[i].length; j++) {
+            if (matriz[i][j] > 0) {
+                matriz[i][j] = 1;
+            } else {
+                matriz[i][j] = 0;
+            }
+        }
+    }
+
+    return matriz;
+}
+
+
 
 
 console.log("MATRIZ ADJACENCIA")
@@ -316,3 +344,4 @@ const fechoTransitivoMatriz = fechoTransitivoOrdem2(matrizAdjacencia);
 console.log("\nFecho Transitivo:");
 imprimirMatriz(fechoTransitivoMatriz);
 composicaoMetroOnibus(matrizAdjacencia, matrizOnibus)
+
