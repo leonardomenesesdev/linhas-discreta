@@ -104,7 +104,27 @@ function isTransitiva(matriz) {
     return transitiva
 }
 
+//CHAT GPT VERSION - DA TUDO 1 
+function fechoTransitivoOrdem2(matriz) {
+    const n = matriz.length;
+    const resultado = matriz.map(linha => linha.slice()); // Copia original
+    const fecho = Array.from({ length: n }, () => Array(n).fill(0)); // Inicializa tudo com 0
 
+    for (let i = 0; i < n; i++) {
+        for (let k = 0; k < n; k++) {
+            if (resultado[i][k] === 1) { // Existe ligação i → k
+                for (let j = 0; j < n; j++) {
+                    if (resultado[k][j] === 1 && resultado[i][j] === 0) { 
+                        // Existe k → j, mas não existe i → j direto
+                        fecho[i][j] = 1; // Precisamos adicionar i → j
+                    }
+                }
+            }
+        }
+    }
+
+    return fecho;
+}
 
 // ? funções auxiliares
 function transposta(matrizAdjacencia) {
@@ -173,3 +193,6 @@ fechoSimetrico(matrizAdjacencia, matrizAdjacenciaTransposta)
 const fecho = fechoSimetrico(matrizAdjacencia, matrizAdjacenciaTransposta);
 console.log("\nFecho Simétrico");
 imprimirMatriz(fecho);
+const fechoTransitivoMatriz = fechoTransitivoOrdem2(matrizAdjacencia);
+console.log("\nFecho Transitivo:");
+imprimirMatriz(fechoTransitivoMatriz);
