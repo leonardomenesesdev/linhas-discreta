@@ -6,7 +6,15 @@ const matrizAdjacencia = [
     [ 0, 0, 0, 1, 1, 0 ], // 4 - Parque
     [ 0, 1, 0, 0, 1, 1 ], // 5 - Shopping
     [ 0, 1, 0, 0, 0, 1 ]  // 6 - Terminal
-  ];
+];
+const matrizOnibus = [
+    [0, 1, 0, 0, 0, 1],
+    [1, 0, 0, 1, 0, 0],
+    [0, 0, 0, 1, 0, 0],
+    [0, 1, 1, 0, 0, 1],
+    [0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 1, 1, 0]
+];
   
 
 // * funções que verificam as classificações
@@ -196,3 +204,4 @@ imprimirMatriz(fecho);
 const fechoTransitivoMatriz = fechoTransitivoOrdem2(matrizAdjacencia);
 console.log("\nFecho Transitivo:");
 imprimirMatriz(fechoTransitivoMatriz);
+composicaoMetroOnibus(matrizAdjacencia, matrizOnibus)
