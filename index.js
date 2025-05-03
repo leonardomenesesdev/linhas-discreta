@@ -107,7 +107,7 @@ function isTransitiva(matriz) {
     return transitiva
 }
 
-//CHAT GPT VERSION - DA TUDO 1 
+
 function fechoTransitivoOrdem2(matriz) {
     const n = matriz.length;
     const resultado = matriz.map(linha => linha.slice()); // Copia original
