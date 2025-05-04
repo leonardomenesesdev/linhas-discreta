@@ -316,7 +316,7 @@ const equivalencia = isEquivalencia(matrizAdjacencia, matrizAdjacenciaTransposta
 const ordem = isOrdem(matrizAdjacencia) ? "Sim" : "Não"
 
 console.log(`A matriz é reflexiva: ${reflexiva}`)
-console.log(`A matriz é irreflexiva: ${irreflexiva}`)
+// console.log(`A matriz é irreflexiva: ${irreflexiva}`)
 console.log(`A matriz é simetrica: ${simetrica}`)
 console.log(`A matriz é antisimetrica: ${antisimetrica}`)
 console.log(`A matriz é assimetrica: ${assimetrica}`)
